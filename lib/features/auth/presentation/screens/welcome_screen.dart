@@ -5,8 +5,7 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
       body: Container(
         color: Colors.white,
         child: Padding(
@@ -58,6 +57,6 @@ class WelcomeScreen extends StatelessWidget {
           ),
         ),
       ),
-    ));
+    );
   }
 }

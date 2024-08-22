@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+part of 'widget.dart';
 
 class ButtonWidget extends StatelessWidget {
   final String title;

@@ -1,6 +1,7 @@
 library home;
 
 import 'package:ads_km7/core/shared/themes/theme.dart';
+import 'package:ads_km7/features/fragment/fragment_injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';

@@ -78,7 +78,7 @@ class ADSTextTheme {
           fontFamily: 'Overpass',
           fontSize: 12,
           color: ADSColor.textPrimary,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w700,
         ),
       );
 }

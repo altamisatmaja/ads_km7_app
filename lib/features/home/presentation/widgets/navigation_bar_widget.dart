@@ -11,20 +11,20 @@ NavigationBarThemeData _getDefault(BuildContext context) {
     backgroundColor: colors.surface,
     shadowColor: Colors.transparent,
     surfaceTintColor: colors.surfaceTint,
-    iconTheme: MaterialStateProperty.resolveWith((states) => IconThemeData(
+    iconTheme: WidgetStateProperty.resolveWith((states) => IconThemeData(
         size: 24.0,
-        color: states.contains(MaterialState.disabled)
+        color: states.contains(WidgetState.disabled)
             ? colors.onSurfaceVariant.withOpacity(0.38)
-            : states.contains(MaterialState.selected)
+            : states.contains(WidgetState.selected)
                 ? colors.onSecondaryContainer
                 : colors.onSurfaceVariant)),
     indicatorColor: colors.secondaryContainer,
     indicatorShape: const StadiumBorder(),
-    labelTextStyle: MaterialStateProperty.resolveWith(
+    labelTextStyle: WidgetStateProperty.resolveWith(
         (states) => textTheme.labelMedium!.apply(
-            color: states.contains(MaterialState.disabled)
+            color: states.contains(WidgetState.disabled)
                 ? colors.onSurfaceVariant.withOpacity(0.70)
-                : states.contains(MaterialState.selected)
+                : states.contains(WidgetState.selected)
                     ? colors.onSurface
                     : colors.onSurfaceVariant)),
   );
@@ -56,7 +56,7 @@ class ADSNavigationBar extends StatelessWidget {
   final double? height;
   final double? elevation;
   final Color? indicatorColor;
-  final MaterialStateProperty<Color?>? overlayColor;
+  final WidgetStateProperty<Color?>? overlayColor;
   final ShapeBorder? indicatorShape;
   final ValueChanged<int>? onDestinationSelected;
 
@@ -194,7 +194,7 @@ class _ADSNavigationDestinationInfo extends InheritedWidget {
   final NavigationDestinationLabelBehavior labelBehavior;
   final Color? indicatorColor;
   final ShapeBorder? indicatorShape;
-  final MaterialStateProperty<Color?>? overlayColor;
+  final WidgetStateProperty<Color?>? overlayColor;
   final VoidCallback onTap;
 
   static _ADSNavigationDestinationInfo of(BuildContext context) => context
@@ -231,8 +231,6 @@ class ADSNavigationDestination extends StatelessWidget {
   Widget build(BuildContext context) {
     _ADSNavigationDestinationInfo info =
         _ADSNavigationDestinationInfo.of(context);
-    const Set<WidgetState> selectedState = {WidgetState.selected};
-    const Set<WidgetState> unselectedState = {};
     // ignore: duplicate_ignore
     // ignore: unused_local_variable
     const Set<WidgetState> disabledState = {WidgetState.disabled};
@@ -291,7 +289,6 @@ class ADSNavigationDestination extends StatelessWidget {
 
 class _ADSNavigationDestinationBuilder extends StatefulWidget {
   const _ADSNavigationDestinationBuilder({
-    super.key,
     required this.buildIcon,
     required this.buildLabel,
     required this.label,
@@ -416,7 +413,6 @@ class _ADSStatusTransitionWidgetBuilder extends StatusTransitionWidget {
 
 class _ADSNavigationBarDestinationSemantics extends StatelessWidget {
   const _ADSNavigationBarDestinationSemantics({
-    super.key,
     required this.child,
   });
 
@@ -454,7 +450,6 @@ class _ADSNavigationBarDestinationSemantics extends StatelessWidget {
 
 class _ADSNavigationBarDestinationTooltip extends StatelessWidget {
   const _ADSNavigationBarDestinationTooltip({
-    super.key,
     required this.message,
     required this.child,
   });
@@ -500,7 +495,6 @@ class _ADSIndicatorInkWell extends InkResponse {
 
 class _ADSNavigationBarDestinationLayout extends StatelessWidget {
   const _ADSNavigationBarDestinationLayout({
-    super.key,
     required this.icon,
     required this.iconKey,
     required this.label,
@@ -570,7 +564,6 @@ class _ADSDestinationLayoutAnimationBuilder extends StatelessWidget {
 
 class _ADSCurveAnimationBuilder extends StatefulWidget {
   const _ADSCurveAnimationBuilder({
-    super.key,
     required this.animation,
     required this.curve,
     required this.reverseCurve,
