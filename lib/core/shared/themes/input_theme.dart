@@ -1,23 +1,23 @@
 part of 'theme.dart';
 
 class ADSInputDecoration {
-  final bool isPrimary;
-
-  ADSInputDecoration({
-    this.isPrimary = true,
-  });
+  ADSInputDecoration();
 
   InputDecorationTheme get theme {
     return InputDecorationTheme(
-      fillColor: _resolverFillColor(),
-      filled: true,
-      enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: ADSColor.borderColor),
-          borderRadius: BorderRadius.circular(56.0)),
+      filled: false,
+      labelStyle: TextStyle(color: ADSColor.textSecondary),
+      hintStyle: TextStyle(color: ADSColor.textSecondary),
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(
+            color: ADSColor
+                .borderColor), // Set border color when the field is enabled
+      ),
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(
+            color: ADSColor
+                .borderColor), // Set border color when the field is focused
+      ),
     );
-  }
-
-  Color _resolverFillColor() {
-    return isPrimary ? ADSColor.buttonPrimary : ADSColor.buttonSecondary;
   }
 }

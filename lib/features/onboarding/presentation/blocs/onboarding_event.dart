@@ -17,3 +17,5 @@ class OnboardingWidgetChangedEvent extends OnboardingEvent {
 }
 
 class OnboardingCompletedEvent extends OnboardingEvent {}
+
+class OnboardingDataLoadedEvent extends OnboardingEvent {}

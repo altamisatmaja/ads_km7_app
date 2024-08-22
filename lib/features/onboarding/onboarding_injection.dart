@@ -2,6 +2,8 @@
 // part 'data/repositories/onboarding_repository_impl.dart';
 library onboarding_injection;
 
+import 'package:ads_km7/core/shared/themes/theme.dart';
+import 'package:ads_km7/features/auth/auth_injection.dart';
 import 'package:ads_km7/features/onboarding/data/models/onboarding_model.dart';
 import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
@@ -30,6 +32,7 @@ part 'presentation/screens/onboarding_screen.dart';
 
 // *: WIDGET
 part 'presentation/widgets/dots_widget.dart';
+part 'presentation/widgets/container_dots_widget.dart';
 
 final GetIt getIt = GetIt.instance;
 

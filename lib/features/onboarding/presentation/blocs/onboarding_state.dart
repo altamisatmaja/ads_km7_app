@@ -17,12 +17,24 @@ class OnboardingInitialState extends OnboardingState {
 }
 
 class OnboardingWidgetState extends OnboardingState {
+  final List<OnboardingEntity> onboardingData;
   final int currentPage;
 
-  const OnboardingWidgetState(this.currentPage);
+  const OnboardingWidgetState(this.onboardingData, this.currentPage);
 
   @override
-  List<Object?> get props => [currentPage];
+  List<Object?> get props => [currentPage, onboardingData];
 }
+
+class OnboardingErrorState extends OnboardingState {
+  final String message;
+
+  const OnboardingErrorState(this.message);
+
+  @override
+  List<Object?> get props => [message];
+}
+
+class OnboardingLoadingState extends OnboardingState {}
 
 class OnboardingCompleteState extends OnboardingState {}

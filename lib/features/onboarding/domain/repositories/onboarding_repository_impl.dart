@@ -3,13 +3,15 @@ part of '../../onboarding_injection.dart';
 class OnboardingRepositoryImpl implements OnboardingRepository {
   final List<OnboardingModel> _onboardingData = [
     const OnboardingModel(
-        title: 'Welcome1',
+        title: 'View and buy\nMedicine online',
         image: 'assets/images/onboarding-one.png',
-        description: 'This is the onboarding process1.'),
+        description:
+            'Etiam mollis metus non purus faucibus sollicitudin. Pellentesque sagittis mi. Integer.'),
     const OnboardingModel(
-        title: 'Welcome2',
-        image: 'assets/images/onboarding-two.png',
-        description: 'This is the onboarding process2.'),
+        title: 'Online medical &\nHealthcare',
+        image: 'assets/images/onboarding-two-fixed.png',
+        description:
+            'Etiam mollis metus non purus faucibus sollicitudin. Pellentesque sagittis mi. Integer.'),
   ];
 
   @override

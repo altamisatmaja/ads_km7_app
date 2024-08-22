@@ -16,12 +16,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
-          BlocProvider(create: (context) => GetIt.instance<OnboardingBloc>())
+          BlocProvider<OnboardingBloc>(
+            create: (context) {
+              final bloc = GetIt.instance<OnboardingBloc>();
+              bloc.add(OnboardingDataLoadedEvent());
+              return bloc;
+            },
+          ),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ADSThemeData.theme,
-          home: const OnboardingScreen(),
+          home: const Material(
+            child: OnboardingScreen(),
+          ),
         ));
   }
 }

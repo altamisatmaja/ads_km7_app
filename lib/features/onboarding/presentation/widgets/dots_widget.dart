@@ -1,12 +1,24 @@
 part of '../../onboarding_injection.dart';
 
-Container dotWidget(int index, int currentPage, BuildContext context) {
-  return Container(
-    width: 10,
-    height: 10,
-    margin: const EdgeInsets.only(right: 5.0),
-    decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20.0),
-        color: Theme.of(context).primaryColor),
-  );
+class OnboardingDotWidget extends StatelessWidget {
+  const OnboardingDotWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<OnboardingBloc, OnboardingState>(
+      builder: (context, state) {
+        if (state is OnboardingWidgetState) {
+          final currentPage = state.currentPage;
+          final itemCount = state.onboardingData.length;
+
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(
+                itemCount, (index) => dotWidget(index, currentPage, context)),
+          );
+        }
+        return const Text('Not loading');
+      },
+    );
+  }
 }
