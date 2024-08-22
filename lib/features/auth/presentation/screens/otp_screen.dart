@@ -27,61 +27,86 @@ class OTPScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
+                    height: 8.0,
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'We just send you a verification code via phone +62 821 39 488 953',
+                      style: Theme.of(context)
+                          .textTheme
+                          .labelMedium
+                          ?.copyWith(color: ADSColor.textSecondary),
+                    ),
+                  ),
+                  const SizedBox(
                     height: 24.0,
                   ),
-                  const TextFieldWidget(
-                    hintText: 'Username',
-                    icon: Icons.person_outline,
-                    suffix: false,
-                  ),
+                  SizedBox(
+                      width: double.infinity,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: List.generate(4, (index) {
+                          return Row(
+                            children: [
+                              otpTextField(
+                                  context: context,
+                                  first: index == 0,
+                                  last: index == 3),
+                              if (index < 3) const SizedBox(width: 10.0),
+                            ],
+                          );
+                        }),
+                      )),
                   const SizedBox(
                     height: 15.0,
                   ),
-                  TextFieldWidget(
-                    hintText: 'Password',
-                    icon: Icons.lock_outline_rounded,
-                    suffix: true,
-                    suffixTitle: 'Forgot?',
-                    suffixOnTap: () {
-                      //
-                    },
-                  ),
-                  const SizedBox(height: 56.0),
+                  const SizedBox(height: 29.0),
                   ButtonWidget(
-                    title: 'Login',
+                    title: 'Submit code',
                     onPressed: () {
                       Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const OTPScreen(),
-                        ),
-                      );
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SuccessCallbackWidget(
+                                  title: 'Phone Number Verified',
+                                  description:
+                                      'Congradulations, your phone number has been verified. You can start using the app',
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const HomeScreen()));
+                                  })));
                     },
                   ),
-                ],
-              ),
-            ),
-          ),
-          GestureDetector(
-            onTap: () {},
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.arrow_back_ios_new_rounded,
-                    size: 13,
-                    color: ADSColor.secondary,
+                  const SizedBox(
+                    height: 24.0,
                   ),
-                  const SizedBox(width: 5.0),
-                  Text(
-                    "Don't have an account? Sign Up",
-                    style: Theme.of(context)
-                        .textTheme
-                        .labelMedium
-                        ?.copyWith(color: ADSColor.secondary),
-                  )
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'The verify code will expire in 00:59',
+                      style: Theme.of(context)
+                          .textTheme
+                          .labelMedium
+                          ?.copyWith(color: ADSColor.textSecondary),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16.0,
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Resend Code',
+                      style: Theme.of(context)
+                          .textTheme
+                          .labelMedium
+                          ?.copyWith(color: ADSColor.secondary),
+                    ),
+                  ),
                 ],
               ),
             ),

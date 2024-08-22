@@ -29,26 +29,34 @@ class RegisterScreen extends StatelessWidget {
                   const SizedBox(
                     height: 24.0,
                   ),
-                  const TextFieldWidget(
-                    hintText: 'Username',
-                    icon: Icons.person_outline,
+                  const BasicTextField(
+                    hintText: 'Your Name',
                     suffix: false,
                   ),
                   const SizedBox(
                     height: 15.0,
                   ),
-                  TextFieldWidget(
-                    hintText: 'Password',
-                    icon: Icons.lock_outline_rounded,
-                    suffix: true,
-                    suffixTitle: 'Forgot?',
-                    suffixOnTap: () {
-                      //
-                    },
+                  const BasicTextField(
+                    hintText: 'Mobile Number',
+                    suffix: false,
                   ),
-                  const SizedBox(height: 56.0),
+                  const SizedBox(
+                    height: 15.0,
+                  ),
+                  const BasicTextField(
+                    hintText: 'Email',
+                    suffix: false,
+                  ),
+                  const SizedBox(
+                    height: 15.0,
+                  ),
+                  const BasicTextField(
+                    hintText: 'Password',
+                    suffix: true,
+                  ),
+                  const SizedBox(height: 24.0),
                   ButtonWidget(
-                    title: 'Login',
+                    title: 'Create Account',
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -58,33 +66,39 @@ class RegisterScreen extends StatelessWidget {
                       );
                     },
                   ),
-                ],
-              ),
-            ),
-          ),
-          GestureDetector(
-            onTap: () {},
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.arrow_back_ios_new_rounded,
-                    size: 13,
-                    color: ADSColor.secondary,
-                  ),
-                  const SizedBox(width: 5.0),
+                  const SizedBox(height: 19.0),
                   GestureDetector(
-                    onTap: () {},
-                    child: Text(
-                      "Don't have an account? Sign Up",
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelMedium
-                          ?.copyWith(color: ADSColor.secondary),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LoginScreen()));
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.arrow_back_ios_new_rounded,
+                            size: 13,
+                            color: ADSColor.secondary,
+                          ),
+                          const SizedBox(width: 5.0),
+                          GestureDetector(
+                            onTap: () {},
+                            child: Text(
+                              "Already have account? Login",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium
+                                  ?.copyWith(color: ADSColor.secondary),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
