@@ -17,6 +17,7 @@ class HomeScreen extends StatelessWidget {
               const ProfileFragment(),
             ][state.selectedIndex],
             bottomNavigationBar: BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
               currentIndex: state.selectedIndex,
               onTap: (index) {
                 context
