@@ -5,8 +5,7 @@ class CategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
       appBar: AppBar(
         surfaceTintColor: ADSColor.backgroundPrimary,
         backgroundColor: ADSColor.backgroundPrimary,
@@ -37,6 +36,6 @@ class CategoryScreen extends StatelessWidget {
           ),
         ],
       ),
-    ));
+    );
   }
 }

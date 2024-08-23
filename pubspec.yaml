@@ -69,19 +69,20 @@ flutter:
 
 flutter_native_splash:
   color: "#FFFFFF"
-  image: assets/icons/splash-icon.png
+  image: assets/icons/spash-icon-12.png
   background_image: "assets/images/splash-background.png"
   android_12:
-    image: assets/icons/splash-icon.png
+    image: assets/icons/spash-icon-12.png
     color: "#FFFFFF"
     background_image: "assets/images/splash-background.png"
   web: false
+  background_image_android: "assets/images/splash-background.png"
 
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/icons/icon.png"
-  min_sdk_android: 16
+  min_sdk_android: 12
   web:
     generate: true
     image_path: "assets/icons/icon.png"
