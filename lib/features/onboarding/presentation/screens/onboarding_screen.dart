@@ -73,10 +73,6 @@ class OnboardingScreen extends StatelessWidget {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (state is OnboardingErrorState) {
-              return Center(
-                child: Text('Error: ${state.message}'),
-              );
             } else {
               return Container();
             }

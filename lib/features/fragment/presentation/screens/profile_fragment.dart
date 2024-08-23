@@ -14,63 +14,85 @@ class ProfileFragment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        // Profile header section
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: const [
-              CircleAvatar(
-                radius: 30,
-                backgroundImage: AssetImage('assets/images/profile_image.png'),
-              ),
-              SizedBox(width: 16),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: ADSColor.backgroundPrimary,
+          automaticallyImplyLeading: false,
+          title: Text(
+            'My Profile',
+            style: Theme.of(context).textTheme.displaySmall,
+          ),
+        ),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    'Hi, Lorem Ipsum',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
+                  const CircleAvatar(
+                    backgroundColor: Colors.transparent,
+                    radius: 35,
+                    backgroundImage:
+                        AssetImage('assets/icons/detail-profile-icon.png'),
                   ),
-                  SizedBox(height: 4),
-                  Text(
-                    'Welcome to MedHub',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey,
-                    ),
+                  const SizedBox(width: 16),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Hi, Lorem Ipsum',
+                          style: Theme.of(context).textTheme.displaySmall),
+                      const SizedBox(height: 4),
+                      const Text(
+                        'Welcome to MedHub',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
-          ),
-        ),
-        Divider(),
-        // Menu list section
-        Expanded(
-          child: ListView.builder(
-            itemCount: profiles.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                leading: Image.asset(
-                  profiles[index]["icon"]!,
-                  height: 24,
-                ),
-                title: Text(profiles[index]["title"]!),
-                trailing: Icon(Icons.arrow_forward_ios, size: 16),
-                onTap: () {
-                  // Handle the tap event
+            ),
+            // Menu list section
+            Expanded(
+              child: ListView.builder(
+                itemCount: profiles.length,
+                itemBuilder: (context, index) {
+                  return Stack(
+                    children: [
+                      ListTile(
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 16),
+                        leading: Image.asset(
+                          profiles[index]["icon"]!,
+                          height: 20,
+                        ),
+                        title: Text(
+                          profiles[index]["title"]!,
+                          style: Theme.of(context).textTheme.labelMedium,
+                        ),
+                        trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                        onTap: () {
+                          // * TODO : Implement Ontap
+                        },
+                      ),
+                      const Positioned(
+                        left: 56,
+                        right: 16,
+                        bottom: 0,
+                        child: Divider(),
+                      ),
+                    ],
+                  );
                 },
-              );
-            },
-          ),
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
