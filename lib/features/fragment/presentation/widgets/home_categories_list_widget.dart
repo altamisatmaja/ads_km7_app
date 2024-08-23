@@ -52,30 +52,36 @@ Widget _buildCategories(BuildContext context) {
 
 Widget _buildCategoryItem(String imagePath, String title,
     List<Color> gradientColors, BuildContext context) {
-  return Column(
-    children: [
-      Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: gradientColors,
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+  return GestureDetector(
+    onTap: () {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const CategoryScreen()));
+    },
+    child: Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: gradientColors,
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: const BorderRadius.all(Radius.circular(50)),
           ),
-          borderRadius: const BorderRadius.all(Radius.circular(50)),
+          padding: const EdgeInsets.all(20),
+          child: Image.asset(
+            imagePath,
+            width: 16,
+            height: 16,
+            fit: BoxFit.cover,
+          ),
         ),
-        padding: const EdgeInsets.all(20),
-        child: Image.asset(
-          imagePath,
-          width: 16,
-          height: 16,
-          fit: BoxFit.cover,
+        const SizedBox(height: 5),
+        Text(
+          title,
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 11),
         ),
-      ),
-      const SizedBox(height: 5),
-      Text(
-        title,
-        style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 11),
-      ),
-    ],
+      ],
+    ),
   );
 }
