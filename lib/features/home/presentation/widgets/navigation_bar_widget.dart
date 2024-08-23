@@ -142,7 +142,7 @@ class __SelectableAnimatedBuilderState extends State<_SelectableAnimatedBuilder>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: widget.duration,
+      duration: Duration.zero,
       value: widget.isSelected ? 1.0 : 0.0,
     );
   }
@@ -244,22 +244,26 @@ class ADSNavigationDestination extends StatelessWidget {
       label: label,
       tooltip: tooltip,
       enabled: enabled,
-      buildIcon: (context) => Stack(
-        alignment: Alignment.center,
-        children: [
-          ADSNavigationIndicator(
-            animation: animation,
-            color: info.indicatorColor ??
-                navigationBarTheme.indicatorColor ??
-                defaults.indicatorColor,
-          ),
-          _ADSStatusTransitionWidgetBuilder(
-            animation: animation,
-            builder: (context, child) => _isForwardOrCompleted(animation)
-                ? (selectedIcon ?? icon)
-                : icon,
-          )
-        ],
+      buildIcon: (context) => SizedBox(
+        height: 24,
+        width: 24,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            ADSNavigationIndicator(
+              animation: animation,
+              color: info.indicatorColor ??
+                  navigationBarTheme.indicatorColor ??
+                  defaults.indicatorColor,
+            ),
+            _ADSStatusTransitionWidgetBuilder(
+              animation: animation,
+              builder: (context, child) => _isForwardOrCompleted(animation)
+                  ? (selectedIcon ?? icon)
+                  : icon,
+            )
+          ],
+        ),
       ),
       buildLabel: (context) {
         final TextStyle effectiveSelectedLabelTextStyle =
@@ -373,13 +377,13 @@ class ADSNavigationIndicator extends StatelessWidget {
         builder: (context, child) {
           final double scale = animation.isDismissed
               ? 0.0
-              : Tween<double>(begin: .4, end: 1.0).transform(
+              : Tween<double>(begin: 0.0, end: 0.0).transform(
                   CurveTween(curve: Curves.easeInOutCubicEmphasized)
                       .transform(animation.value));
 
           return Transform(
             alignment: Alignment.center,
-            transform: Matrix4.diagonal3Values(scale, 1.0, 1.0),
+            transform: Matrix4.diagonal3Values(scale, 0.0, 0.0),
             child: child,
           );
         },
@@ -388,7 +392,7 @@ class ADSNavigationIndicator extends StatelessWidget {
           builder: (context, child) => _SelectableAnimatedBuilder(
             isSelected: _isForwardOrCompleted(animation),
             duration: Duration.zero,
-            alwaysDoFullAnimation: true,
+            alwaysDoFullAnimation: false,
             builder: (context, animation) => FadeTransition(
               opacity: animation,
             ),

@@ -104,18 +104,19 @@ class CartScreen extends StatelessWidget {
           )
         ],
       ),
-      bottomNavigationBar: Padding(
+      bottomNavigationBar: Container(
         padding: const EdgeInsets.all(16.0),
-        child: ElevatedButton(
+        color: Colors.transparent,
+        child: ButtonWidget(
+          title: 'Go To Cart',
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => CheckoutScreen()));
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CheckoutScreen(),
+              ),
+            );
           },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blue[900],
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-          ),
-          child: const Text('Place Order @ Rp 185.000'),
         ),
       ),
     );

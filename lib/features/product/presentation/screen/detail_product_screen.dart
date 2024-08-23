@@ -7,11 +7,16 @@ class DetailProductScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: ADSColor.backgroundPrimary,
         leading: const Icon(Icons.arrow_back),
-        title: const Text(''),
+        backgroundColor: ADSColor.backgroundPrimary,
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications),
+            icon: const Icon(Icons.notifications_none_outlined),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(Icons.shopping_cart_checkout_outlined),
             onPressed: () {},
           ),
         ],
@@ -21,21 +26,14 @@ class DetailProductScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Sugar Free Gold Low Calories',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            Text('Sugar Free Gold Low Calories',
+                style: Theme.of(context).textTheme.displayMedium),
             const SizedBox(height: 4),
-            const Text(
-              'Etiam mollis metus non purus',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
-              ),
-            ),
+            Text('Etiam mollis metus non purus',
+                style: Theme.of(context)
+                    .textTheme
+                    .labelMedium
+                    ?.copyWith(color: ADSColor.textSecondary)),
             const SizedBox(height: 16),
             Center(
               child: Image.asset(
@@ -50,42 +48,44 @@ class DetailProductScreen extends StatelessWidget {
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text(
-                      'Rp 56.000',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      'Etiam mollis',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey,
-                      ),
-                    ),
+                  children: [
+                    Text('Rp 56.000',
+                        style: Theme.of(context)
+                            .textTheme
+                            .displayMedium
+                            ?.copyWith(fontSize: 18.0)),
+                    Text('Etiam mollis',
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelMedium
+                            ?.copyWith(color: ADSColor.textSecondary)),
                   ],
                 ),
-                ElevatedButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(Icons.add),
-                  label: const Text('Add to cart'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.teal,
-                    foregroundColor: Colors.white,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.add_box_outlined,
+                      color: ADSColor.labelStartColor,
+                      size: 18.0,
+                    ),
+                    const SizedBox(
+                      width: 5.0,
+                    ),
+                    Text('Add to cart',
+                        style:
+                            Theme.of(context).textTheme.labelMedium?.copyWith(
+                                  color: ADSColor.labelStartColor,
+                                ))
+                  ],
                 ),
               ],
             ),
-            const SizedBox(height: 16),
-            const Text(
-              'Package size',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            const SizedBox(height: 10),
+            const Divider(),
+            const SizedBox(height: 10),
+            Text('Package size',
+                style: Theme.of(context).textTheme.headlineSmall),
             const SizedBox(height: 8),
             Row(
               children: [
@@ -97,49 +97,42 @@ class DetailProductScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16),
-            const Text(
+            Text(
               'Product Details',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
             const SizedBox(height: 8),
-            const Text(
-              'Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi ut nisi odio. Nulla facilisi. Nunc risus massa, gravida id egestas a, pretium vel tellus. Praesent feugiat diam sit amet pulvinar finibus. Etiam et nisi aliquet, accumsan nisi sit.',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
-              ),
-            ),
+            Text(
+                'Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi ut nisi odio. Nulla facilisi. Nunc risus massa, gravida id egestas a, pretium vel tellus. Praesent feugiat diam sit amet pulvinar finibus. Etiam et nisi aliquet, accumsan nisi sit.',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge
+                    ?.copyWith(fontSize: 14.0)),
             const SizedBox(height: 16),
-            const Text(
+            Text(
               'Rating and Reviews',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
             const SizedBox(height: 8),
-            _buildRatingSection(),
+            _buildRatingSection(context),
             const SizedBox(height: 16),
-            _buildReviewTile(),
-            const SizedBox(height: 16),
+            _buildReviewTile(context),
           ],
         ),
       ),
-      bottomNavigationBar: Padding(
+      bottomNavigationBar: Container(
         padding: const EdgeInsets.all(16.0),
-        child: ElevatedButton(
+        color: Colors.transparent,
+        child: ButtonWidget(
+          title: 'Go To Cart',
           onPressed: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => CartScreen()));
+              context,
+              MaterialPageRoute(
+                builder: (context) => CartScreen(),
+              ),
+            );
           },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blue[900],
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-          ),
-          child: const Text('GO TO CART'),
         ),
       ),
     );
@@ -147,34 +140,41 @@ class DetailProductScreen extends StatelessWidget {
 
   Widget _buildPackageOption(
       BuildContext context, String price, String size, bool isSelected) {
-    return Expanded(
+    return Flexible(
+      fit: FlexFit.loose,
       child: Padding(
         padding: const EdgeInsets.only(right: 8.0),
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
           decoration: BoxDecoration(
-            color: isSelected ? Colors.teal[50] : Colors.grey[200],
+            color: isSelected
+                ? ADSColor.labelStartColor.withOpacity(0.5)
+                : Colors.grey[200],
             borderRadius: BorderRadius.circular(8.0),
             border: Border.all(
-                color: isSelected ? Colors.teal : Colors.transparent, width: 2),
+                color:
+                    isSelected ? ADSColor.labelStartColor : Colors.transparent,
+                width: 1),
           ),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(
-                price,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              Text(price,
+                  style: isSelected
+                      ? Theme.of(context).textTheme.labelSmall?.copyWith(
+                          color: ADSColor.labelStartColor, fontSize: 10)
+                      : Theme.of(context)
+                          .textTheme
+                          .labelSmall
+                          ?.copyWith(fontSize: 10)),
               const SizedBox(height: 4),
-              Text(
-                size,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey,
-                ),
-              ),
+              Text(size,
+                  style: isSelected
+                      ? Theme.of(context)
+                          .textTheme
+                          .labelSmall
+                          ?.copyWith(color: ADSColor.labelStartColor)
+                      : Theme.of(context).textTheme.labelSmall),
             ],
           ),
         ),
@@ -182,104 +182,114 @@ class DetailProductScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildRatingSection() {
-    return Column(
+  Widget _buildRatingSection(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Row(
-          children: [
-            const Text(
-              '4.4',
-              style: TextStyle(
-                fontSize: 48,
-                fontWeight: FontWeight.bold,
+        SizedBox(
+          width: MediaQuery.of(context).size.width * (3 / 9),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    '4.4',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  const SizedBox(width: 8),
+                  Icon(
+                    Icons.star,
+                    color: ADSColor.ratingReviewPrimary,
+                    size: 26,
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(width: 8),
-            const Icon(
-              Icons.star,
-              color: Colors.amber,
-              size: 48,
-            ),
-            const SizedBox(width: 16),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text(
-                  '923 Ratings',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  'and 257 Reviews',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey,
-                  ),
-                ),
-              ],
-            ),
-          ],
+              const SizedBox(height: 4),
+              Text(
+                '923 Ratings and 257 Reviews',
+                style: Theme.of(context)
+                    .textTheme
+                    .labelMedium
+                    ?.copyWith(color: ADSColor.textSecondary),
+              ),
+            ],
+          ),
         ),
-        const SizedBox(height: 16),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _buildRatingBar(4, 67),
-            _buildRatingBar(3, 20),
-            _buildRatingBar(2, 7),
-            _buildRatingBar(1, 0),
-            _buildRatingBar(0, 2),
-          ],
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Container(
+            width: 1.0,
+            height: 90.0,
+            color: ADSColor.dividerColor,
+          ),
+        ),
+        SizedBox(
+          width: MediaQuery.of(context).size.width * (3 / 6.5),
+          child: Column(
+            children: [
+              _buildRatingBar(5, 67, context),
+              _buildRatingBar(4, 20, context),
+              _buildRatingBar(3, 7, context),
+              _buildRatingBar(2, 0, context),
+              _buildRatingBar(1, 2, context),
+            ],
+          ),
         ),
       ],
     );
   }
 
-  Widget _buildRatingBar(int stars, int percentage) {
-    return Expanded(
-      child: Row(
-        children: [
-          Text(
-            '$stars',
-            style: const TextStyle(
-              fontSize: 16,
-            ),
+  Widget _buildRatingBar(int stars, int percentage, BuildContext context) {
+    return Row(
+      children: [
+        Text(
+          '$stars',
+          style: const TextStyle(
+            fontSize: 16,
           ),
-          const SizedBox(width: 4),
-          Expanded(
-            child: LinearProgressIndicator(
-              value: percentage / 100,
-              color: Colors.teal,
-              backgroundColor: Colors.grey[200],
-            ),
+        ),
+        const SizedBox(width: 4),
+        Icon(
+          Icons.star,
+          color: ADSColor.ratingReviewPrimary,
+          size: 16,
+        ),
+        const SizedBox(width: 4),
+        Expanded(
+          child: LinearProgressIndicator(
+            value: percentage / 100,
+            color: Colors.teal,
+            backgroundColor: Colors.grey[200],
           ),
-          const SizedBox(width: 4),
-          Text(
-            '$percentage%',
-            style: const TextStyle(
-              fontSize: 16,
-            ),
-          ),
-        ],
-      ),
+        ),
+        const SizedBox(width: 8),
+        Text('$percentage%',
+            style: Theme.of(context)
+                .textTheme
+                .labelMedium
+                ?.copyWith(color: ADSColor.textSecondary)),
+      ],
     );
   }
 
-  Widget _buildReviewTile() {
-    return ListTile(
-      leading: const CircleAvatar(
-        child: Icon(Icons.person),
-      ),
-      title: Row(
+  Widget _buildReviewTile(BuildContext context) {
+    return Column(children: [
+      Row(
         children: [
-          const Text('Lorem Hoffman'),
+          Text('Lorem Hoffman', style: Theme.of(context).textTheme.labelMedium),
           const Spacer(),
-          const Text('05 August 2024'),
+          Text('05 August 2024',
+              style: Theme.of(context)
+                  .textTheme
+                  .labelMedium
+                  ?.copyWith(color: ADSColor.textSecondary)),
         ],
       ),
-      subtitle: Column(
+      Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
@@ -290,7 +300,11 @@ class DetailProductScreen extends StatelessWidget {
                 size: 16,
               ),
               const SizedBox(width: 4),
-              const Text('4.2'),
+              Text('4.2',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(color: ADSColor.textSecondary)),
             ],
           ),
           const SizedBox(height: 8),
@@ -299,6 +313,6 @@ class DetailProductScreen extends StatelessWidget {
           ),
         ],
       ),
-    );
+    ]);
   }
 }

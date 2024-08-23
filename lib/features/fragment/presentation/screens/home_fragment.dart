@@ -1,5 +1,4 @@
 part of '../../fragment_injection.dart';
-
 class HomeFragment extends StatefulWidget {
   const HomeFragment({super.key});
 
@@ -13,12 +12,16 @@ class _HomeFragmentState extends State<HomeFragment> {
 
   double _spacing = 0;
   double _positionSearchBar = 0;
+  bool _hasCalculated = false;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _calculateSpacing();
+      if (!_hasCalculated) {
+        _calculateSpacing();
+        _hasCalculated = true;
+      }
     });
   }
 

@@ -24,4 +24,6 @@ class ADSColor {
   static Color get backgroundSecondary => const Color(0xff00A59B);
   static Color get backgroundIcon => const Color(0xffFFA629);
   static Color get backgroundProduct => const Color(0xffF6F6F8);
+
+  static Color get dividerColor => const Color(0xff000000).withOpacity(0.1);
 }
