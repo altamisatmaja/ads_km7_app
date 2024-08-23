@@ -238,7 +238,7 @@ class CartScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         color: Colors.transparent,
         child: ButtonWidget(
-          title: 'Go To Cart',
+          title: 'Place Order @ Rp 185.000',
           onPressed: () {
             Navigator.push(
               context,
