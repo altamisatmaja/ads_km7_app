@@ -2,32 +2,18 @@ part of '../../home_injection.dart';
 
 NavigationBarThemeData _getDefault(BuildContext context) {
   final ColorScheme colors = Theme.of(context).colorScheme;
-  final TextTheme textTheme = Theme.of(context).textTheme;
 
   return NavigationBarThemeData(
-    height: 80.0,
-    elevation: 3.0,
-    labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-    backgroundColor: colors.surface,
-    shadowColor: Colors.transparent,
-    surfaceTintColor: colors.surfaceTint,
-    iconTheme: WidgetStateProperty.resolveWith((states) => IconThemeData(
-        size: 24.0,
-        color: states.contains(WidgetState.disabled)
-            ? colors.onSurfaceVariant.withOpacity(0.38)
-            : states.contains(WidgetState.selected)
-                ? colors.onSecondaryContainer
-                : colors.onSurfaceVariant)),
-    indicatorColor: colors.secondaryContainer,
-    indicatorShape: const StadiumBorder(),
-    labelTextStyle: WidgetStateProperty.resolveWith(
-        (states) => textTheme.labelMedium!.apply(
-            color: states.contains(WidgetState.disabled)
-                ? colors.onSurfaceVariant.withOpacity(0.70)
-                : states.contains(WidgetState.selected)
-                    ? colors.onSurface
-                    : colors.onSurfaceVariant)),
-  );
+      height: 80.0,
+      elevation: 0.0,
+      labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+      backgroundColor: colors.surface,
+      shadowColor: Colors.transparent,
+      surfaceTintColor: colors.surfaceTint,
+      iconTheme: WidgetStateProperty.resolveWith((states) => IconThemeData(
+            size: 24.0,
+            color: colors.onSurfaceVariant.withOpacity(0.38),
+          )));
 }
 
 bool _isForwardOrCompleted(Animation<double> animation) =>
@@ -143,7 +129,7 @@ class __SelectableAnimatedBuilderState extends State<_SelectableAnimatedBuilder>
     _controller = AnimationController(
       vsync: this,
       duration: Duration.zero,
-      value: widget.isSelected ? 1.0 : 0.0,
+      value: widget.isSelected ? 0.0 : 0.0,
     );
   }
 
@@ -336,17 +322,6 @@ class _ADSNavigationDestinationBuilderState
               navigationBarThemeData.overlayColor ??
               defaults.overlayColor,
           onTap: widget.enabled ? info.onTap : null,
-          child: Row(
-            children: [
-              Expanded(
-                child: _ADSNavigationBarDestinationLayout(
-                  icon: widget.buildIcon(context),
-                  iconKey: iconKey,
-                  label: widget.buildLabel(context),
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );
@@ -375,11 +350,7 @@ class ADSNavigationIndicator extends StatelessWidget {
   Widget build(BuildContext context) => AnimatedBuilder(
         animation: animation,
         builder: (context, child) {
-          final double scale = animation.isDismissed
-              ? 0.0
-              : Tween<double>(begin: 0.0, end: 0.0).transform(
-                  CurveTween(curve: Curves.easeInOutCubicEmphasized)
-                      .transform(animation.value));
+          const double scale = 0;
 
           return Transform(
             alignment: Alignment.center,
@@ -464,7 +435,6 @@ class _ADSNavigationBarDestinationTooltip extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Tooltip(
         message: message,
-        verticalOffset: 42.0,
         excludeFromSemantics: true,
         preferBelow: true,
         child: child,
@@ -478,9 +448,8 @@ class _ADSIndicatorInkWell extends InkResponse {
     super.overlayColor,
     super.customBorder,
     super.onTap,
-    super.child,
   }) : super(
-          containedInkWell: true,
+          containedInkWell: false,
           highlightColor: Colors.transparent,
           splashColor: Colors.transparent,
         );
@@ -497,49 +466,7 @@ class _ADSIndicatorInkWell extends InkResponse {
       };
 }
 
-class _ADSNavigationBarDestinationLayout extends StatelessWidget {
-  const _ADSNavigationBarDestinationLayout({
-    required this.icon,
-    required this.iconKey,
-    required this.label,
-  });
-
-  final Widget icon;
-  final GlobalKey iconKey;
-  final Widget label;
-
-  static final Key _labelKey = UniqueKey();
-
-  @override
-  Widget build(BuildContext context) => _ADSDestinationLayoutAnimationBuilder(
-        builder: (context, animation) => CustomMultiChildLayout(
-          delegate: _ADSNavigationDestinationLayoutDelegate(
-            animation: animation,
-          ),
-          children: [
-            LayoutId(
-              id: _ADSNavigationDestinationLayoutDelegate.iconId,
-              child: RepaintBoundary(
-                key: iconKey,
-                child: icon,
-              ),
-            ),
-            LayoutId(
-              id: _ADSNavigationDestinationLayoutDelegate.labelId,
-              child: FadeTransition(
-                alwaysIncludeSemantics: true,
-                opacity: animation,
-                child: RepaintBoundary(
-                  key: _labelKey,
-                  child: label,
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-}
-
+// ignore: unused_element
 class _ADSDestinationLayoutAnimationBuilder extends StatelessWidget {
   const _ADSDestinationLayoutAnimationBuilder({required this.builder});
 
@@ -637,49 +564,4 @@ class __ADSCurveAnimationBuilderState extends State<_ADSCurveAnimationBuilder> {
 
     return widget.builder(context, curvedAnimation);
   }
-}
-
-class _ADSNavigationDestinationLayoutDelegate extends MultiChildLayoutDelegate {
-  _ADSNavigationDestinationLayoutDelegate({required this.animation})
-      : super(relayout: animation);
-
-  final Animation<double> animation;
-
-  static const int iconId = 1;
-  static const int labelId = 2;
-
-  @override
-  void performLayout(Size size) {
-    double halfWidth(Size size) => size.width / 2;
-    double halfHeight(Size size) => size.height / 2;
-
-    final Size iconSize = layoutChild(iconId, BoxConstraints.loose(size));
-    final Size labelSize = layoutChild(labelId, BoxConstraints.loose(size));
-
-    final double yPositionOffset = Tween<double>(
-      begin: halfHeight(iconSize),
-      end: halfHeight(iconSize) + halfHeight(labelSize),
-    ).transform(animation.value);
-    final double iconYPosition = halfHeight(size) - yPositionOffset;
-
-    positionChild(
-      iconId,
-      Offset(
-        halfWidth(size) - halfWidth(iconSize),
-        iconYPosition,
-      ),
-    );
-
-    positionChild(
-      labelId,
-      Offset(
-        halfWidth(size) - halfWidth(labelSize),
-        iconYPosition + iconSize.height,
-      ),
-    );
-  }
-
-  @override
-  bool shouldRelayout(_ADSNavigationDestinationLayoutDelegate oldDelegate) =>
-      oldDelegate.animation != animation;
 }

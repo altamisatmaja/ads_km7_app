@@ -5,8 +5,14 @@ class OrderFragment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
-      child: Scaffold(),
-    );
+    return SafeArea(
+        child: Scaffold(
+      body: Center(
+        child: Text(
+          'Order Screen',
+          style: Theme.of(context).textTheme.displayLarge,
+        ),
+      ),
+    ));
   }
 }

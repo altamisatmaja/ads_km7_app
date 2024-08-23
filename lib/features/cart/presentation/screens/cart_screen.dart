@@ -74,7 +74,7 @@ class CartScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 15),
-          Container(
+          SizedBox(
             height: 150,
             child: ListView.builder(
               itemCount: cartItems.length,
@@ -243,7 +243,7 @@ class CartScreen extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => CheckoutScreen(),
+                builder: (context) => const CheckoutScreen(),
               ),
             );
           },

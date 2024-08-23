@@ -27,27 +27,27 @@ class HomeScreen extends StatelessWidget {
                 BottomNavigationBarItem(
                   icon: Image.asset('assets/icons/home-navbar-icon.png',
                       width: 30.0, height: 30.0),
-                  label: 'Beranda',
+                  label: '',
                 ),
                 BottomNavigationBarItem(
                   icon: Image.asset('assets/icons/notif-navbar-icon.png',
                       width: 30.0, height: 30.0),
-                  label: 'Konten',
+                  label: '',
                 ),
                 const BottomNavigationBarItem(
                   icon: Icon(Icons.add_box_outlined,
                       size: 30.0, color: Color(0xFF4A4B57)),
-                  label: 'Tanya Ahli',
+                  label: '',
                 ),
                 BottomNavigationBarItem(
                   icon: Image.asset('assets/icons/cart-navbar-icon.png',
                       width: 30.0, height: 30.0),
-                  label: 'Chat Me',
+                  label: '',
                 ),
                 BottomNavigationBarItem(
                   icon: Image.asset('assets/icons/profile-navbar-icon.png',
                       width: 30.0, height: 30.0),
-                  label: 'Profil',
+                  label: '',
                 ),
               ],
             ),
