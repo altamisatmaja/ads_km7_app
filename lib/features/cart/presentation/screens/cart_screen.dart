@@ -24,13 +24,58 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.arrow_back),
+        backgroundColor: ADSColor.backgroundPrimary,
+        leading: GestureDetector(
+          child: Icon(
+            Icons.arrow_back,
+            color: ADSColor.primary,
+          ),
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: Text(
+          'Your Cart',
+          style: Theme.of(context).textTheme.displaySmall,
+        ),
       ),
       body: Column(
         children: [
-          // ListView with constrained height
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '2 Items in your cart',
+                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                      fontWeight: FontWeight.w300,
+                      color: ADSColor.textSecondary),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.add_box_outlined,
+                      color: ADSColor.labelStartColor,
+                      size: 18.0,
+                    ),
+                    const SizedBox(
+                      width: 5.0,
+                    ),
+                    Text('Add more',
+                        style:
+                            Theme.of(context).textTheme.labelMedium?.copyWith(
+                                  color: ADSColor.textSecondary,
+                                ))
+                  ],
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 15),
           Container(
-            height: 150, // Adjust the height as per your requirement
+            height: 150,
             child: ListView.builder(
               itemCount: cartItems.length,
               itemBuilder: (context, index) {
@@ -45,35 +90,61 @@ class CartScreen extends StatelessWidget {
                         height: 60,
                         width: 60,
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               item['name'],
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
                             ),
                             Text(item['description']),
-                            SizedBox(height: 5),
+                            const SizedBox(height: 5),
                             Text('Rp ${item['price']}'),
                           ],
                         ),
                       ),
-                      Row(
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          IconButton(
-                            icon: Icon(Icons.remove),
-                            onPressed: () {
-                              // Handle quantity decrement
-                            },
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Container(
+                              padding: const EdgeInsets.all(5.0),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: ADSColor.primary.withOpacity(0.25),
+                                  width: 1.0,
+                                ),
+                              ),
+                              child: Icon(
+                                Icons.close_rounded,
+                                color: ADSColor.primary.withOpacity(0.25),
+                                size: 10,
+                              ),
+                            ),
                           ),
-                          Text('${item['quantity']}'),
-                          IconButton(
-                            icon: Icon(Icons.add),
-                            onPressed: () {
-                              // Handle quantity increment
-                            },
+                          Row(
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.remove),
+                                onPressed: () {
+                                  // ? TODO: Implement decrement
+                                },
+                              ),
+                              Text('${item['quantity']}'),
+                              IconButton(
+                                icon: const Icon(Icons.add),
+                                onPressed: () {
+                                  // ? TODO: Implement increment
+                                },
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -83,22 +154,81 @@ class CartScreen extends StatelessWidget {
               },
             ),
           ),
-          // Payment Summary
+          const SizedBox(height: 15),
           Padding(
             padding: const EdgeInsets.all(16.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                color: Colors.transparent,
+                border: Border.all(
+                  color: ADSColor.labelStartColor,
+                  width: 1.0,
+                ),
+              ),
+              width: double.infinity,
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.discount_outlined,
+                        color: ADSColor.primary,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        '1 Coupon Aplied',
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelMedium
+                            ?.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color: ADSColor.labelStartColor),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(5.0),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: ADSColor.primary.withOpacity(0.25),
+                        width: 1.0,
+                      ),
+                    ),
+                    child: Icon(
+                      Icons.close_rounded,
+                      color: ADSColor.primary.withOpacity(0.25),
+                      size: 10,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          // Payment Summary
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Payment Summary',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                SizedBox(height: 10),
-                _buildSummaryRow('Order Total', 'Rp 228.800'),
-                _buildSummaryRow('Items Discount', '- Rp 28.800'),
-                _buildSummaryRow('Coupon Discount', '- Rp 15.800'),
-                _buildSummaryRow('Shipping', 'Free'),
-                Divider(),
-                _buildSummaryRow('Total', 'Rp 185.000', isBold: true),
-                SizedBox(height: 20),
+                Text(
+                  'Payment Summary',
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+                const SizedBox(height: 15),
+                _buildSummaryRow('Order Total', 'Rp 228.800', context),
+                _buildSummaryRow('Items Discount', '- Rp 28.800', context),
+                _buildSummaryRow('Coupon Discount', '- Rp 15.800', context),
+                _buildSummaryRow('Shipping', 'Free', context),
+                const Divider(),
+                _buildSummaryRow('Total', 'Rp 185.000', context, isBold: true),
+                const SizedBox(height: 20),
               ],
             ),
           )
@@ -122,22 +252,33 @@ class CartScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSummaryRow(String title, String value, {bool isBold = false}) {
+  Widget _buildSummaryRow(String title, String value, BuildContext context,
+      {isBold = false}) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             title,
-            style: TextStyle(
-                fontWeight: isBold ? FontWeight.bold : FontWeight.normal),
+            style: isBold == false
+                ? Theme.of(context)
+                    .textTheme
+                    .labelMedium
+                    ?.copyWith(color: ADSColor.textSecondary)
+                : Theme.of(context)
+                    .textTheme
+                    .labelMedium
+                    ?.copyWith(color: ADSColor.textPrimary),
           ),
-          Text(
-            value,
-            style: TextStyle(
-                fontWeight: isBold ? FontWeight.bold : FontWeight.normal),
-          ),
+          Text(value,
+              style: isBold == false
+                  ? Theme.of(context)
+                      .textTheme
+                      .labelMedium
+                      ?.copyWith(color: ADSColor.primary)
+                  : Theme.of(context).textTheme.labelMedium?.copyWith(
+                      color: ADSColor.primary, fontWeight: FontWeight.w700)),
         ],
       ),
     );

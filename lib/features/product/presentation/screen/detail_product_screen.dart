@@ -8,7 +8,15 @@ class DetailProductScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: ADSColor.backgroundPrimary,
-        leading: const Icon(Icons.arrow_back),
+        leading: GestureDetector(
+          child: Icon(
+            Icons.arrow_back,
+            color: ADSColor.primary,
+          ),
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
         backgroundColor: ADSColor.backgroundPrimary,
         actions: [
           IconButton(

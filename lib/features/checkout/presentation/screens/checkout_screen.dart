@@ -33,98 +33,184 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Checkout'),
-        leading: Icon(Icons.arrow_back),
+        surfaceTintColor: ADSColor.backgroundPrimary,
+        backgroundColor: ADSColor.backgroundPrimary,
+        leading: GestureDetector(
+          child: Icon(
+            Icons.arrow_back,
+            color: ADSColor.primary,
+          ),
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: Text(
+          'Checkout',
+          style: Theme.of(context).textTheme.displaySmall,
+        ),
       ),
       body: ListView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         children: [
-          Text(
-            '2 Items in your cart',
-            style: TextStyle(color: Colors.grey),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '2 Items in your cart',
+                style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                    fontWeight: FontWeight.w300, color: ADSColor.textSecondary),
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text('TOTAL',
+                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                            color: ADSColor.textSecondary,
+                          )),
+                  const SizedBox(
+                    height: 5.0,
+                  ),
+                  Text('Rp 185.000',
+                      style: Theme.of(context).textTheme.displaySmall),
+                ],
+              ),
+            ],
           ),
-          SizedBox(height: 10),
-          Text(
-            'TOTAL',
-            style: TextStyle(color: Colors.grey),
-            textAlign: TextAlign.end,
-          ),
-          Text(
-            'Rp 185.000',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            textAlign: TextAlign.end,
-          ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Text(
             'Delivery Address',
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.displaySmall,
           ),
-          ...addresses.map((address) => RadioListTile(
-                title: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(address['label'],
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    Text(address['phone']),
-                    Text(address['address']),
-                  ],
+          const SizedBox(height: 20),
+          ...addresses.map((address) => Container(
+                margin: const EdgeInsets.symmetric(vertical: 5.0),
+                padding: const EdgeInsets.symmetric(vertical: 5.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  color: Colors.transparent,
+                  border: Border.all(
+                    color: ADSColor.borderColor,
+                    width: 1.0,
+                  ),
                 ),
-                value: address['label'],
-                groupValue: selectedAddress,
-                onChanged: (value) {
-                  setState(() {
-                    selectedAddress = value.toString();
-                  });
-                },
-                secondary: Icon(Icons.edit),
+                child: RadioListTile(
+                  title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(address['label'],
+                          style: Theme.of(context).textTheme.labelLarge),
+                      Text(address['phone'],
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(color: ADSColor.textSecondary)),
+                      Text(address['address'],
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(color: ADSColor.textSecondary)),
+                    ],
+                  ),
+                  value: address['label'],
+                  groupValue: selectedAddress,
+                  onChanged: (value) {
+                    setState(() {
+                      selectedAddress = value.toString();
+                    });
+                  },
+                  secondary: Icon(
+                    Icons.mode_edit_outlined,
+                    color: ADSColor.textSecondary,
+                  ),
+                ),
               )),
-          TextButton.icon(
-            onPressed: () {
-              // Add address logic here
-            },
-            icon: Icon(Icons.add),
-            label: Text('Add Address'),
-          ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Text(
             'Payment method',
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.displaySmall,
           ),
-          ...paymentMethods.map((method) => RadioListTile(
-                title: Row(
+          const SizedBox(height: 20),
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.0),
+              color: Colors.transparent,
+              border: Border.all(
+                color: ADSColor.borderColor,
+                width: 1.0,
+              ),
+            ),
+            child: Column(
+              children: paymentMethods.map((method) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Image.asset(method['icon'], height: 30, width: 30),
-                    SizedBox(width: 10),
-                    Text(method['label']),
+                    Row(
+                      children: [
+                        Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 5.0, horizontal: 5),
+                            margin: const EdgeInsets.symmetric(
+                                vertical: 10.0, horizontal: 10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              color: Colors.transparent,
+                              border: Border.all(
+                                color: ADSColor.borderColor,
+                                width: 1.0,
+                              ),
+                            ),
+                            child: Image.asset(method['icon'],
+                                height: 30, width: 30)),
+                        const SizedBox(width: 10),
+                        Text(
+                          method['label'],
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineMedium
+                              ?.copyWith(fontSize: 14.0),
+                        ),
+                      ],
+                    ),
+                    Radio(
+                      value: method['label'],
+                      groupValue: selectedPaymentMethod,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedPaymentMethod = value.toString();
+                        });
+                      },
+                    ),
                   ],
-                ),
-                value: method['label'],
-                groupValue: selectedPaymentMethod,
-                onChanged: (value) {
-                  setState(() {
-                    selectedPaymentMethod = value.toString();
-                  });
-                },
-              )),
+                );
+              }).toList(),
+            ),
+          ),
         ],
       ),
-      bottomNavigationBar: ButtonWidget(
-        title: 'Pay Now Rp 185.000',
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => SuccessCallbackWidget(
-                      title: 'Thank you',
-                      description:
-                          'Your Order will be delivered with invoice #INV20240817. You can track the delivery in the order section.',
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const HomeScreen()));
-                      })));
-        },
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.all(16.0),
+        color: Colors.transparent,
+        child: ButtonWidget(
+          title: 'Pay Now Rp 185.000',
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => SuccessCallbackWidget(
+                        title: 'Thank you',
+                        description:
+                            'Your Order will be delivered with invoice #INV20240817. You can track the delivery in the order section.',
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const HomeScreen()));
+                        })));
+          },
+        ),
       ),
     );
   }
